@@ -1,0 +1,81 @@
+---
+title: "Data Visualization in R"
+output: html_document
+---
+
+Una de las funciones más fuertes de R es la habilidad para producir un amplio rango de gráficas para visualizar datos fácilmente y rápidamente. Para hacerlo, R incluye tres sistemas gráficos: el paquete estándar Graphics, el paquete Lattice por Trellis Graphs y el paquete grammar-of-graphics ggplot2.
+
+
+
+# Simple Bar Chart
+De acuerdo a (Behrens, 2008) las gráficas de barras son usadas para visualizar magnitudes de valores nominales. Pueden consistir en teoria de un solo elemento de datos, pero en el más común de los casos son usados para comparar valores cuantitativos de varias entidades entre si. Las gráficas de barras como grupo importante de visualización estándar, son gráficas distinguidas de los gráficos de linea y gráficos dcirculares, ya que no muestran avances continuos sobre un intervalo, pero miden valores de elementos de datos discretos. Además, muestran valores numéricos absolutos más que proporciones.
+
+Para hacer las gráficas de barras haciendo uso de los 3 sistemas gráficos en R, se utiliza el data.frame mtcars que se encuentra en R, haciendo uso de la columna gear.
+
+```{r}
+head(mtcars)
+mtcars$gear
+
+```
+
+
+## Graphics
+
+Este paquete contiene las funciones para gráficos 'base'. 
+
+Para crear un Gráfico de barras en graphics se utiliza la función bar plot. En el siguiente ejemplo se hace uso de esta función utilizando los datos en el data.frame mtcars, le añade un titulo a la gráfica (main), una etiqueta al eje x (xlab) y por último el color (col).  
+
+
+```{r}
+counts <- table(mtcars$gear)
+barplot(counts, main="Car Distribution", xlab="Number of Gears", col="blue")
+```
+
+Los argumentos para la funcion se puede ver en el siguiente [link] (https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/barplot.html).
+
+Para una lista completa de las funciones en Graphics, use (help = "graphics") o puede visitar la pagina [Graphics](https://stat.ethz.ch/R-manual/R-devel/library/graphics/html/00Index.html). 
+
+## Lattice
+
+El paquete de complemento Lattice es una implementación de los gráficos de Trellis para R.  Es un potente y elegante sistema de visualización de datos de alto nivel con énfasis en datos multivariables y es flexible de manipular. Esta diseñado para satisfacer las necesidades tipicas de un gráfico con el minimo funcionamiento, pero puede ser fácilmente ampliado para manipular requerimientos no estandarizados.
+
+Para hacer un gáfico de barras en lattice primero se instala la libreria lattice, posteriormente se carga en el entorno de R y haciendo uso de la función barchart se crea el gráfico. En esta función sus argumentos son los datos a graficar (counts), el titulo del gráfico (main), la etiqueta para el eje x (xlab), se indica que las barras son verticales (horizontal) y por ultimo el color del gráfico (col).
+
+```{r}
+library(package = "lattice")
+counts <- table(mtcars$gear)
+barchart(counts, main="Car Distribution", xlab="Number of Gears", horizontal="false", col="yellow")
+```
+
+Para acceder a la documentación de la función se ejecuta help(barchart) en R. También se puede acceder a la documentación del paquete en general a través de (Documentación)[http://lattice.r-forge.r-project.org/documentation.php] o ejecutando help(lattice) en el entorno de R.
+En este link se muestran algunos ejemplos de Gráficos realizados con el paquete Lattice(Ejemplos)[http://lmdvr.r-forge.r-project.org/figures/figures.html]
+
+
+## ggplot2
+
+Una implementación de la grámatica de gráficos en R. Esta combina las ventajas de los sistemas de gráficos base y lattice: ejes condicionales y compartidos que son manipulados automáticamente y se puede construir un gráfico paso a paso de múltiples fuentes de datos. Ademas implementa un sistema condicional multidimensional sofisticado y una interface consistente para mapear datos a atributos estéticos.
+
+La idea es constuir cada gráfico a partir de los mismos componentes: conjunto de datos y Geoms (marcas que representan puntos de datos y coordenadas del sistema).
+
+Al igual que lattice primero se tiene que instalar el paquete ggplot2 y posteriormente cargarlo. Para hacer un gráfico en ggplot2 se utiliza la función ggplot, la cual  se puede utilizar para declarar los datos de entrada del gráfico, especificar la estética de la trama, permitiendo añadir capas al gráfico con las caracteristicas deseadas por el usuario(color, tipo de gràfico, titulo del gráfico, etc.).
+
+Geom_bar es la función que se utiliza en ggplot2 para hacer un gráfico de barras, se agrega al objeto ggplot creado (g) con un +, especificando el color y relleno del gràfico o bien se puede añadir en una capa adicional. Finalemente se agrega el titulo y nombre de la etiqueta en el eje x al gràfico con labs.  
+
+```{r}
+library("ggplot2")
+g <- ggplot(mtcars, aes(gear))+ geom_bar(fill = "gray", colour = "green")
+g + labs(list(title = "TCar Distribution", x="Number of Gears"))
+```
+
+
+
+Para consultar la documentación de la función Geombar visite el siguiente link (geom bar)[http://docs.ggplot2.org/current/geom_bar.html] o consulte la ayuda en el entorno de R.
+
+La documentación y otros recursos de ggplot2 esta disponilbe en (Documentación) [http://docs.ggplot2.org/current/index.html]
+
+
+
+
+
+
+
