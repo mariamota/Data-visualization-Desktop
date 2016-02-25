@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 
 # Example data
 
-y = [3, 10, 7, 5, 3, 4.5, 6, 8.1]
+y = np.arange(1, 10)
 N = len(y)
 x = range(N)
 width = 1/1.5
